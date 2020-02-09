@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Practical JavaScript</title>
+  </head>
+  <body>
+    Hi
+	<script type="text/javascript">
+    
+    //JavaScript below
+ 
+function packageBoxing(pkg, boxes) {
+var numBoxes=boxes.length;
+var smallestVolume=5000000000;
+var testVolume=0;
+var box=[];
+var bestBox=-1;
+Array.prototype.remove = function(from, to) {
+  var rest = this.slice((to || from) + 1 || this.length);
+  this.length = from < 0 ? this.length + from : from;
+  return this.push.apply(this, rest);
+};
+    
+for (var i=0;i<numBoxes;i++){
+    box=boxes[i]
+    if(testBox(pkg,box)){
+        testVolume = box[0]*box[1]*box[2];
+        if(testVolume<smallestVolume){
+            bestBox=i;
+            smallestVolume=testVolume;
+        }
+    }
+}
+    
+function testBox(pkg,box){
+    var pkgMax="";
+    var boxMax="";
+    while(box.length>0){
+        pkgMax=Math.max.apply(null,pkg);
+        boxMax=Math.max.apply(null,box);
+        if(boxMax<pkgMax){
+            return false;
+        }else{
+            var pkgIndex = pkg.indexOf(pkgMax);
+            var boxIndex = box.indexOf(boxMax);
+            console.log(pkgIndex, boxIndex)
+            pkg.remove(pkgIndex);
+            box.remove(boxIndex);
+        }
+    }
+    return true
+}
+    return bestBox
+}
+
+var pkg=[4,5,3];
+var boxes=[[3,10,2],[2,6,7],[1,1,1]];
+packageBoxing(pkg,boxes)
+    </script>
+  </body>
+</html>

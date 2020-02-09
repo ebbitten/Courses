@@ -1,0 +1,165 @@
+...
+To this point, 600.1x 600.2x have been a fairly conventional
+introduction to computer science and programming.
+Now we're about to diverge from a conventional path
+into material that's not usually covered
+in introductory courses.
+The typical introduction to programming, programs
+are treated as functions.
+Given a set of inputs, each function
+produces a specific output.
+But now we're about to dive into the murky
+waters of uncertainty.
+We will be writing programs whose output can't necessarily
+be predicted based on the inputs.
+I'm not doing this to torture you.
+But rather, because we really can't write programs
+that model the world without confronting uncertainty.
+Yes, uncertainty is uncomfortable.
+But certainty is usually not justified.
+Now people used to think the world
+was a pretty organized place.
+Newtonian mechanics was based upon the premise
+that every effect has a cause.
+That is to say, from the time of Isaac Newton,
+people believed that the physical world followed
+a set of deterministic rules.
+I.e.
+they believed that the physical world
+is a completely predictable place
+and that all future states of a physical system
+can, at least in theory, be derived from knowledge
+about its current state.
+That was a perfectly reasonable belief,
+which was confirmed by pretty much everything that was then
+observable.
+It was also a comforting belief for about two centuries.
+Then along came the Copenhagen doctrine.
+And everything changed.
+The Copenhagen doctrine's proponents,
+led by Bohr and Heisenberg, argued that at its most
+fundamental level, the behavior of the physical world cannot be
+predicted.
+One can make probabilistic statements of the form,
+x is highly likely to occur, or even almost
+certainly going to occur.
+But not statements of the form, x is certain to occur.
+You can imagine that this roiled the worlds of science
+and philosophy, and became an almost religious argument.
+Many distinguished thinkers, most notably
+Einstein and Schrodinger, vehemently disagreed.
+Einstein famously said, God does not play dice,
+turning it into a true religious argument.
+But does the answer really matter?
+Is there any pragmatic reason to care whether the world is
+inherently unpredictable?
+Let's try a little experiment.
+I have here two coins.
+I'm going to put them in my hands
+and shake them up, and then put them down on the table.
+Take a look at them, and ask you a question.
+Do you think that both of them came up heads?
+There is nothing inherently unpredictable about the answer
+to that question.
+In fact, since I looked, I know the answer.
+But you don't.
+So you have to treat it as unpredictable.
+And if you were to bet money, you'd
+be wise to bet against two tails since it's probably not that.
+Actually in fact, it is that.
+But nevertheless, you would have been
+wise to bet against it given your state of knowledge
+about the world.
+So the world may or may not be inherently unpredictable.
+But our lack of knowledge does not allow us, in all cases,
+to make accurate predictions.
+Therefore, we might as well treat the world as if it really
+were inherently unpredictable.
+Which gets us to the notion of predictive non-determinism,
+the concept that our inability to make accurate measurements
+about the physical world makes it
+impossible to make precise predictions
+about future states.
+This is in contrast to the notion
+of causal non-determinism, the belief
+that not every event is caused by previous events.
+The question of causal non-determinism
+is still unsettled.
+However, whether the reason we cannot predict events is
+because they are truly unpredictable or is because we
+simply don't have enough information to predict them is
+of no practical importance.
+The Bohr-Einstein debate was about how
+to understand the lowest levels of the physical world.
+And honestly, except to physicists,
+it's not really of immediate interest to the vast majority
+of the world's population.
+However, the same issues arise in more visible, and therefore
+more obviously relevant, situations.
+Perhaps the outcomes of horse races,
+spins of roulette wheels, and stock market investments
+are truly causally deterministic.
+But you would be very wise to treat
+them as non-deterministic.
+That is to say, to treat them as stochastic processes.
+A stochastic process is an ongoing process
+where the next state might depend
+on both the previous states and some random element.
+So let's look at an example here.
+On this slide, we see two specifications of a function
+called roll die.
+The first says that roll die returns
+an int between one and six.
+The second says that it returns a randomly chosen int
+between one and six.
+These two specifications are fundamentally different.
+This one is under determined.
+We don't know what it returns.
+Maybe it's returning a random value,
+but maybe it returns three every time you call it.
+This one requires randomness.
+So this one is a stochastic process.
+And that's what we're going to be talking about now.
+Here's another example-- one that
+may be familiar to many of you.
+So square root finds an approximation
+within epsilon of the square root of x.
+It assumes that x and epsilon are floats,
+x at least 0, epsilon greater than 0, and returns a float, y,
+such that y squared is within between x minus epsilon
+and x plus epsilon.
+Now this specification allows, but does not
+require, a non-deterministic implementation.
+It might return the same approximation
+for each x-epsilon pair, or it might return a different one
+each time it calls.
+There are lots of different possible answers here.
+The thing to keep in mind about non-deterministic programs
+is that they can be very tricky when debugging programs that
+call them, because sometimes you might get an answer that works
+and sometimes you might get an answer that doesn't work.
+This is a subject we'll be returning
+to as we get deeper and deeper into implementing
+stochastic models.
+OK.
+Let's look at implementing a random process here.
+These are what we looked at before.
+So this is the non-deterministic roll die.
+The implementation starts by importing random.
+As we've seen before, random is a standard Python library
+that contains many, many functions
+useful for implementing stochastic processes.
+So the one we're going to use here is random.choice.
+
+Given a list of elements, or any sequence of elements,
+random.choice returns some random element of it
+with equal probability.
+So it could return one, two, three, four, five, or six.
+Each is equally likely each time you call roll die.
+So here's a program that tests it we call test roll.
+I set n equal to 10 as the default,
+which is going to run roll die and produce
+a string of results.
+In the next segment, we'll return to this function
+and we'll play with it to look at interesting questions
+about probability and randomness.

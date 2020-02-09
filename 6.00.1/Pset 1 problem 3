@@ -1,0 +1,5 @@
+num=0
+slice=['','','']
+for i in range(0,len(s)-2):
+    if s[i,i+3]='bob':
+        num+=1

@@ -1,0 +1,257 @@
+...
+We ended the last segment looking at this code.
+Now let's run it a couple of times.
+So, let's come over here and try it.
+We'll try test roll 5, and it prints the string 4, 3, 6, 3,
+5.
+Let's try it again, 4, 3, 4, 2, 5.
+We can try it again.
+Not very interesting.
+And you can see, each time we try it
+we're getting a different answer.
+So, indeed, this really is a stochastic process.
+Now let's consider a hypothetical question.
+If I were to run test roll 5 again, which of these outputs
+do you think is more likely to occur?
+Another way to ask the question is,
+what is the probability of each of them?
+Well, let's work it out.
+Probability is about counting.
+So, you count the number of possible events
+that could occur.
+And then you count the number of events
+that have the property of interest,
+divide one by the other.
+So let's try it for example.
+It's a probability of getting 5 once.
+Well, here are all the possible things I could get.
+I could get five 0s.
+I could get four 0s followed by a 1, four 0s followed by a 2.
+All these possibilities, eventually, the last one maybe,
+is five 6s in a row.
+So how long is this sequence?
+How many possible different results can I get here?
+It's 6 to the fifth power.
+Quite a large number.
+So, what's the probability of getting five 1s?
+Well, there's only one element of this sequences
+has five 1s in it.
+So, it's 1/6 to the fifth, or about 0.0001286.
+And, of course, the probability of getting 5, 4, 4, 2, 5,
+exactly the same.
+People think probability is complicated.
+But, as I hope, I've given you an intuition.
+While it's easy to get things wrong in probability,
+and we'll see plenty of opportunities
+to do that this course, it's intrinsically not complicated.
+It's about counting.
+And there are really three basic facts from which
+most everything follows.
+Fact one, probabilities are always in the range 0 to 1.
+0 if impossible and 1 if guaranteed.
+Why are they in the range 0 to 1?
+Well, let's go back to our counting argument.
+We count all the possible outcomes.
+We take all the subset of that that satisfies our property,
+take the ratio, and, of course, that number
+will be between 0 and 1.
+It can't be any bigger than 1.
+Fact two, if the probability of an event occurring is P,
+the probability of it not occurring is always 1 minus P.
+Why is that so?
+Well, it either occurs or it doesn't occur.
+So, the two probabilities have to add up
+to 1, hence the 1 minus P rule.
+Finally, when events are independent of each other,
+the probability of all of the events occurring
+is equal to a product of the probabilities of each
+of the events occurring, this multiplication rule.
+Now, this rule holds only when the events are independent.
+And, in probability, independent is an enormously important
+concept.
+Two events are said to be independent
+if one event has no influence on the other.
+When events are independent, it is usually reasonably easy
+to reason about a sequence of events.
+However, when they're not independent,
+things get a lot more complex.
+Consequently, assuming that things
+are independent when they're not can lead one seriously astray.
+Let's look at an example.
+Rio, Madrid, and Barcelona are two very good football teams,
+or to the Americans in the audience, soccer teams.
+So we can ask, what's the probability
+of both of them losing the game on the same day?
+Well, they're both good teams.
+So let's assume they're both playing the same day.
+And let's assume, since they're good teams, each on average
+win seven out of eight games.
+I just made this number up.
+Don't go trying to check it on the web.
+So we could think that the probability
+of each of them winning is 7/8.
+And so, the probability of both winning is 7/8 times
+7/8, or 49/64.
+Since we know that the probabilities of things
+add up to 1, we therefore know the probability of them
+not both winning, i.e. one of them losing,
+is 1 minus 49/64, 15/64.
+And this calculation would be perfectly
+valid under the assumption that the probability
+of one team winning or losing is independent of the probability
+of the other team winning or losing.
+But suppose they're playing each other.
+The outcomes are no longer independent.
+And, therefore, the calculation I just did
+is totally and utterly bogus.
+The probability of one of them losing
+is clearly way higher than 15/64.
+Let's go back to rolling dice.
+Recall that we deduced that the probability of rolling
+five consecutive 1s is about 0.0001286.
+Just in case we don't believe in probability calculations,
+let's write a simulation to try it.
+So I've written some very simple code here.
+So, we're going to give it a goal.
+For example, five consecutive 1s, and the number of trials,
+for example, try it 1,000 times.
+I'll initialize total to 0.
+And then, for i in range number of trials,
+I'll throw the dice len(goal) number of times,
+check whether the result matches the goal.
+If it does, I'll add 1 to my total.
+If it doesn't, I won't change the total.
+And then when I'm done, I'm going
+to print the actual probability, the one we just showed you
+how to calculate.
+And then what I'm going to call the estimated
+probability by taking the total divided
+by the number of trials.
+I'm just rounding it so the output looks nicer.
+And then we can compare the two.
+In some sense, this is two ways of arriving
+at what we think should be roughly the same answer.
+And each can check the other.
+Now, let's run this simulation and see what we get.
+In fact, let's run it twice.
+
+Well, that's what we get alright.
+Let's go look at it on the PowerPoint.
+So we see that, naturally, the actual probability
+is the same each time because that was
+a non-stochastic calculation.
+And, as it happens, we got the same estimated probability
+twice.
+This should raise a couple of questions for you.
+First of all, how did I know in advance
+that this was what would get printed?
+If I ran it and it's stochastic, it's kind of weird.
+Well, it's not.
+I kind of cheated.
+In fact, this wasn't stochastic.
+Let's go back over to the code.
+And you can see this line of code
+following random, importing random.
+I've called something called random dot seed and set
+it to 0.
+How does random work?
+As we'll see later, what random does
+is it generates a sequence of random numbers.
+In this case, it's a sequence of random numbers between 0 and 6,
+or 0 and 5, that it uses to select from the sequence
+of possible values for a die.
+Now, in fact, these numbers are not truly random.
+They're what's called pseudorandom,
+because you can't actually generate numbers at random.
+Pseudorandom number generators work, typically,
+by reading some unexpected value.
+For example, the number of milliseconds since January 1,
+1968, which changes pretty quickly in a calc computer,
+and then off of that, what's called a seed generating
+the sequence of results.
+Given a seed, you always get the same sequence.
+But the seed is predictably non-deterministic.
+That is to say, we don't know what the seed will be.
+But you can cheat.
+And that's what I did here.
+I said, don't go find some unpredictable seed.
+Use 0 as the seed.
+Since I'm using the same seed every time I run this program,
+I'll get the same answer.
+This, by the way, is incredibly useful
+when you are debugging your program
+because it allows you to have it do the same thing every time.
+On the other hand, eventually, it's
+not what you want to do because maybe it
+works only with some particular choice of the seed.
+Perhaps more interestingly, why did the simulation
+give me the wrong answer twice?
+The probability of getting five 1s is less than 1 in 1,000.
+So, it is hardly surprising that we
+got a sample probability of 0.
+What do we do about it?
+Well, let's try more trials.
+So, instead of 1,000 trials, let's try a million trials.
+But, since that'll take a little while, let's try it only once.
+
+Won't take too long, I promise.
+
+This looks a lot better.
+So there's a lesson here.
+If you try only a small number of trials,
+and you're looking at a very rare event,
+then you're likely to get the wrong answer out.
+Later on, we'll spend a lot of time asking the question, how
+many trials do we really need?
+Let's look at another example.
+Nothing new, but just to confirm our understanding
+of how things work.
+How common are boxcars?
+Now, actually, not that kind of boxcar, even though those
+are pretty common, but a double 6 when you roll dice
+is called a boxcar.
+We can do the calculation.
+There are six squared possible combinations of two die.
+And of those, only one has two 6s in it.
+Hence the probability of boxcars is 1/36.
+Just for fun, let's look at another way of computing it.
+The probability of rolling a 6 with one die is 1/6.
+The probability of rolling a 6 with the second die
+is also 1/6.
+Since these events are independent,
+the probability of rolling a 6 with both die
+is 1/6 times 1/6, or 1/36, approximately 0.2776.
+Now let's look at the same problem by simulation.
+Simulation is very similar in structure of the one
+we just looked at.
+Num tests plays the role of num trials
+in the previous simulation.
+So, I'm going to say the number of boxcars is 0 for i in
+range number of tests.
+If I roll 6 once, I roll 6 again, I increase it by 1,
+and then I return the ratio of the number of boxcars
+to the number of tests.
+And then, I'm going to print the results.
+Let's see what happens when we run it.
+
+It tells us that the frequency of double 6s is 2.782%.
+And if we go back a slide, we can
+see that's pretty close to what we computed
+using probability theory.
+What are the morals here?
+One, it takes a lot of trials to get
+a good estimate of the frequency of the occurrence
+of a rare event.
+We'll talk lots more in later lectures
+about how to know when we have enough trials.
+We saw that we should not confuse the sample probability,
+the probability we get when we run an experiment,
+with the actual probability.
+The third moral, which I hadn't really alluded to earlier,
+is it was really kind of silly to do these simulations at all
+since there was a perfectly good closed-form answer
+to both questions.
+However, we will see that there are many examples where
+this is not true and there are not good closed-form answers.
+In these situations, simulations can be extremely useful,
+as we will see in the next segment.

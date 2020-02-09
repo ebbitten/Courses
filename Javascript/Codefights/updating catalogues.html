@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Chapter "XXX", Example "YYY"</title>
+</head>
+<body>
+    <script>
+	function catalogUpdate(catalog, updates) {
+    var found = false;
+    for(var i=0;i<updates.length;i++){
+        found = false;
+        for(var j=0; j<catalog.length;j++){
+        if(updates[i][0]==catalog[j][0]){
+            found = true;
+            catalog[j].push(updates[i][1]);
+        }
+        if(found==false){
+            catalog.push(updates([i]));
+        }
+        }
+}
+    return catalog
+}
+	var catalog = [["Books","Classics","Fiction"],
+ ["Electronics","Cell Phones","Computers","Ultimate item"],
+ ["Grocery","Beverages","Snacks"],
+ ["Snacks","Chocolate","Sweets"],
+ ["root","Books","Electronics","Grocery"]];
+ var updates = [["Snacks","Marmalade"],
+ ["Fiction","Harry Potter"],
+ ["root","T-shirts"],
+ ["T-shirts","CodeFights"]];
+ catalogUpdate(catalog,updates);
+        document.write();
+    </script>
+</body>
+</html>

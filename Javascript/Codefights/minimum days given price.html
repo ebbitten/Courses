@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Chapter "XXX", Example "YYY"</title>
+</head>
+<body>
+    <script>
+	function minimalBasketPrice(maxPrice, vendorsDelivery, vendorsProducts) {
+	    var vendorMatrix = [];
+	    for(var i=0;i<vendorsDelivery.length;i++){
+	        vendorMatrix[i]=[vendorsDelivery[i]].concat(vendorsProducts[i]);
+
+	    }
+	    vendorMatrix.sort(function(a,b){
+	        if(a[0]<b[0]) return -1;
+	        if(a[0]>b[0]) return 1;
+	        if(a[0]==b[0]) return 0;
+	    })
+	    var currentDays = vendorMatrix[0][0];
+	    var currentRows = 0;
+	    var currentRowDay = 0;
+	    var found = false;
+	    var availableRows = [];
+	    var tryArray = [];
+
+	    while(found==false){
+	        //find the appropriate rows given currentDays
+	        currentRows++;
+			if(currentRows==1){
+				availableRows = [vendorMatrix[0]];
+			}else{
+				//alert(currentRows);
+	        availableRows = vendorMatrix.slice(0,currentRows);
+			}
+			// //alert(vendorMatrix)
+	        //try to fill the basket in under the price (call to separate function)
+	        tryArray = canFillBasket(maxPrice,availableRows);
+	        if(tryArray == false){
+				currentDays++;
+	        }else{
+				found = true;
+				//alert(tryArray, maxPrice, availableRows);
+				var returnArray = []
+				for(var i=0; i<vendorsDelivery.length; i++){
+					if(tryArray.indexOf(vendorsDelivery[i])>-1){
+						returnArray.push(i)
+					}
+				}
+				return returnArray;
+	        }
+			if(currentRows==vendorMatrix.length){
+				//alert("didn't find anything");
+				found=true;
+			}
+	        //if can't fill basket then increment the days
+
+	    }
+
+	}
+
+	function canFillBasket(maxPrice, availableRows){
+	    var currentSpending = 0;
+	    var currentBought = [];
+	    for(var i=1;i<availableRows[0].length;i++){
+	        currentBought.push(-1);
+	        for (var j=0; j<availableRows.length;j++){
+				// //alert(j, availableRows[j][i])
+	            if((availableRows[j][i]<currentBought[i-1][0]||currentBought[i-1]==-1)&&availableRows[j][i]!=-1){
+					currentBought[i-1]=[availableRows[j][i],availableRows[j][0]];
+					}
+	        }
+	    }
+	    if(currentBought.indexOf(-1)>-1){
+			//alert("Had -1s");
+			return false;
+		}
+	    for(var i=0; i<currentBought.length; i++){
+	        currentSpending += currentBought[i][0];
+	    }
+	    if(currentSpending>maxPrice){
+			//alert("exceeded maxPrice");
+			 return false;
+		}
+	    var returnArray = [];
+	    for (var i=0; i<currentBought.length; i++){
+	        returnArray.push(currentBought[i][1]);
+	    }
+		//alert("Returning returnArray");
+	    return returnArray;
+	}
+	var maxPrice = 7;
+	var vendorsDelivery = [5, 4, 2, 3];
+	var vendorsProducts = [[1,1,1],
+						 [3,-1,3],
+						 [-1,2,2],
+						 [5,-1,-1]];
+ var newArray = minimalBasketPrice(maxPrice,vendorsDelivery,vendorsProducts);
+        document.write(newArray);
+    </script>
+</body>
+</html>

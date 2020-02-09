@@ -1,0 +1,55 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Practical JavaScript</title>
+  </head>
+  <body>
+    Hi
+	<script type="text/javascript">
+    
+    //JavaScript below
+function theFile(version1, version2) {
+  var len1 = version1.length;
+  var len2 = version2.length;
+  var maxLen = [[]];
+  var take = [[]];
+  for (var j = 0; j <= len2; j++) {
+    maxLen[0].push(0);
+    take[0].push(false);
+  }
+  for (var i = 1; i <= len1; i++) {
+    maxLen.push([0]);
+    take.push([false]);
+    for (var j = 1; j <= len2; j++) {
+      maxLen[i].push(0);
+      take[i].push(false);
+      if(version1[i-1]==version2[j-1]){take[i][j]=true;for(var k=1;k<=i;k++){for(var l=1;l<=j;l++){if (maxLen[k][l]==0){maxLen[k][l]=(Math.min(len1-i,len2-j))};}}}
+    }
+  }
+
+  var answer = [];
+  var i = len1;
+  var j = len2;
+  while (i > 0 && j > 0) {
+    if (take[i][j]) {
+      i--;
+      j--;
+      answer.push(version1[i]);
+    } else {
+      if (maxLen[i - 1][j] > maxLen[i][j - 1]) {
+        i--;
+      } else {
+        j--;
+      }
+    }
+  }
+console.log(maxLen)
+  return answer.reverse().join('');
+}
+
+
+theFile("ABCDGH","AEDFHR")
+    
+    </script>
+  </body>
+</html>
